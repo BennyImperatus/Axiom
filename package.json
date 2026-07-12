@@ -1,0 +1,23 @@
+{
+  "name": "apex-game-management",
+  "version": "1.0.0",
+  "description": "Premium Roblox Game Management Service Website",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "tailwind:build": "npx @tailwindcss/cli -i ./public/index.css -o ./public/dist/output.css",
+    "tailwind:watch": "npx @tailwindcss/cli -i ./public/index.css -o ./public/dist/output.css --watch",
+    "dev": "concurrently \"npm run tailwind:watch\" \"node server.js\""
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "helmet": "^7.1.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.0.0",
+    "concurrently": "^8.2.2"
+  }
+}
