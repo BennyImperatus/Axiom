@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Axiom | Roblox Game Management</title>
+  <meta name="description" content="Apex Studio Operations (ApexOps) provides high-end Roblox game management services, including project coordination, quality assurance, community growth, and release planning.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS v3 Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Tailwind Configuration -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            slate: {
+              950: '#030712',
+            },
+            brand: {
+              blue: '#2563eb',
+              purple: '#7c3aed',
+              cyan: '#06b6d4',
+              pink: '#db2777',
+            }
+          },
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            display: ['Space Grotesk', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Custom Standard CSS for Styling Fallback & Keyframes (Ensures Dark Mode & Grid Render Instantly) -->
+  <style>
+    /* Hard fallbacks to prevent Flash of Unstyled Content (FOUC) and guarantee dark theme */
+    html, body {
+      background-color: #030712 !important;
+      color: #f3f4f6 !important;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+    }
+    
+    /* Moving background grid */
+    .animated-grid {
+      background-size: 50px 50px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+      animation: grid-scroll 20s linear infinite;
+    }
+
+    @keyframes grid-scroll {
+      0% { background-position: 0 0; }
+      100% { background-position: 50px 50px; }
+    }
+
+    /* Mesh Gradient Blobs */
+    @keyframes rotate-mesh {
+      0% { transform: translate(0px, 0px) rotate(0deg) scale(1); }
+      33% { transform: translate(30px, -50px) rotate(120deg) scale(1.1); }
+      66% { transform: translate(-20px, 20px) rotate(240deg) scale(0.9); }
+      100% { transform: translate(0px, 0px) rotate(360deg) scale(1); }
+    }
+
+    .mesh-blob-1 {
+      animation: rotate-mesh 25s ease-in-out infinite;
+    }
+    
+    .mesh-blob-2 {
+      animation: rotate-mesh 30s ease-in-out infinite alternate;
+    }
+
+    /* Glassmorphism Card System */
+    .glass-card {
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.45) 0%, rgba(9, 13, 26, 0.45) 100%);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Hover Glow Cards */
+    .glow-blue:hover {
+      border-color: rgba(37, 99, 235, 0.4) !important;
+      box-shadow: 0 15px 45px -10px rgba(37, 99, 235, 0.3) !important;
+      transform: translateY(-5px);
+    }
+
+    .glow-purple:hover {
+      border-color: rgba(124, 58, 237, 0.4) !important;
+      box-shadow: 0 15px 45px -10px rgba(124, 58, 237, 0.3) !important;
+      transform: translateY(-5px);
+    }
+
+    /* Running outline border animations */
+    @keyframes border-breath {
+      0%, 100% { border-color: rgba(124, 58, 237, 0.25); box-shadow: 0 25px 60px rgba(124, 58, 237, 0.05); }
+      50% { border-color: rgba(37, 99, 235, 0.55); box-shadow: 0 25px 60px rgba(37, 99, 235, 0.18); }
+    }
+
+    .featured-card-active {
+      animation: border-breath 6s ease-in-out infinite;
+    }
+
+    /* Gradients and Text Accents */
+    .text-gradient-purple-cyan {
+      background: linear-gradient(135deg, #a78bfa 0%, #38bdf8 55%, #818cf8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .text-gradient-sunset {
+      background: linear-gradient(135deg, #f472b6 0%, #a78bfa 50%, #60a5fa 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+  </style>
+</head>
+<body class="selection:bg-brand-purple/40 selection:text-white bg-slate-950">
+
+  <!-- Background Layer -->
+  <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+    <div class="absolute -top-[10%] -left-[10%] w-[800px] h-[800px] rounded-full bg-brand-purple/10 blur-[130px] mesh-blob-1"></div>
+    <div class="absolute top-[30%] -right-[15%] w-[700px] h-[700px] rounded-full bg-brand-blue/10 blur-[120px] mesh-blob-2"></div>
+    <div class="absolute bottom-[-10%] left-[10%] w-[900px] h-[900px] rounded-full bg-brand-pink/5 blur-[160px] mesh-blob-1"></div>
+    <div class="absolute inset-0 animated-grid"></div>
+  </div>
+
+  <!-- Header / Navigation -->
+  <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-5 px-4 md:px-8 border-b border-transparent">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <!-- Logo -->
+      <a href="#" class="flex items-center space-x-3.5 z-50">
+        <img src="/logo.jpg" alt="ApexOps Logo" class="w-9 h-9 rounded-xl shadow-lg border border-slate-805 flex-shrink-0">
+        <span class="text-2xl font-bold tracking-tight text-white font-display">Ax<span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-brand-cyan">Iom</span></span>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <nav class="hidden lg:flex items-center space-x-9 bg-slate-900/40 backdrop-blur-xl border border-slate-800/40 px-8 py-2.5 rounded-full shadow-inner">
+        <a href="#about" class="text-xs font-semibold tracking-wider uppercase text-slate-400 hover:text-white transition-colors">About</a>
+        <a href="#services" class="text-xs font-semibold tracking-wider uppercase text-slate-400 hover:text-white transition-colors">Services</a>
+        <a href="#projects" class="text-xs font-semibold tracking-wider uppercase text-slate-400 hover:text-white transition-colors">Projects</a>
+        <a href="#plans" class="text-xs font-semibold tracking-wider uppercase text-slate-400 hover:text-white transition-colors">Plans</a>
+        <a href="#testimonials" class="text-xs font-semibold tracking-wider uppercase text-slate-400 hover:text-white transition-colors">Testimonials</a>
+      </nav>
+
+      <!-- CTA Button -->
+      <div class="hidden lg:flex items-center space-x-4">
+        <a href="#contact" class="px-6 py-2.5 rounded-full text-xs font-semibold tracking-wide uppercase border border-slate-800 bg-slate-950/60 text-slate-300 hover:text-white transition-all">Contact Us</a>
+        <a href="#plans" class="px-6 py-2.5 rounded-full text-xs font-semibold tracking-wide uppercase bg-gradient-to-r from-brand-blue via-brand-purple to-brand-pink hover:opacity-90 text-white transition-all shadow-lg shadow-brand-purple/25">Get Started</a>
+      </div>
+
+      <!-- Mobile Menu Toggle -->
+      <button id="mobile-menu-btn" class="lg:hidden p-2.5 rounded-xl bg-slate-900/60 border border-slate-800 text-white focus:outline-none z-50">
+        <i data-lucide="menu" id="menu-icon" class="w-6 h-6"></i>
+      </button>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobile-drawer" class="fixed inset-0 bg-slate-950/98 backdrop-blur-2xl z-40 transform translate-x-full transition-transform duration-500 lg:hidden flex flex-col justify-center items-center space-y-9">
+      <a href="#about" class="mobile-nav-link text-2xl font-display font-medium tracking-wide text-slate-300 hover:text-white transition-colors">About</a>
+      <a href="#services" class="mobile-nav-link text-2xl font-display font-medium tracking-wide text-slate-300 hover:text-white transition-colors">Services</a>
+      <a href="#projects" class="mobile-nav-link text-2xl font-display font-medium tracking-wide text-slate-300 hover:text-white transition-colors">Projects</a>
+      <a href="#plans" class="mobile-nav-link text-2xl font-display font-medium tracking-wide text-slate-300 hover:text-white transition-colors">Plans</a>
+      <a href="#testimonials" class="mobile-nav-link text-2xl font-display font-medium tracking-wide text-slate-300 hover:text-white transition-colors">Testimonials</a>
+      <div class="flex flex-col space-y-4 w-64 pt-6 border-t border-slate-900">
+        <a href="#contact" class="mobile-nav-link text-center py-3.5 rounded-full text-sm font-semibold uppercase tracking-wider border border-slate-800 bg-slate-900/50 text-white transition-all">Contact Us</a>
+        <a href="#plans" class="mobile-nav-link text-center py-3.5 rounded-full text-sm font-semibold uppercase tracking-wider bg-gradient-to-r from-brand-blue to-brand-purple text-white transition-all">Get Started</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="relative min-h-screen flex items-center justify-center pt-32 pb-20 px-4 md:px-8 overflow-hidden z-10">
+    <div class="max-w-6xl mx-auto text-center space-y-9 relative">
+      <!-- Decorative Badge -->
+      <div class="inline-flex items-center space-x-2 bg-slate-900/60 border border-slate-800 px-5 py-2 rounded-full text-[11px] font-bold tracking-wider text-slate-300 uppercase shadow-inner">
+        <span class="w-1.5 h-1.5 rounded-full bg-brand-cyan animate-pulse"></span>
+        <span>Premium Studio Operations Layer</span>
+      </div>
+
+      <!-- Main Heading -->
+      <h1 class="text-4xl sm:text-6xl md:text-8xl font-extrabold tracking-tight leading-none text-white max-w-5xl mx-auto font-display">
+        Professional Roblox <br>
+        <span class="text-gradient-purple-cyan">Game Management</span>
+      </h1>
+
+      <!-- Subtitle -->
+      <p class="text-md sm:text-lg text-slate-400 max-w-2xl mx-auto font-light leading-relaxed">
+        Helping Roblox studios organize, manage, and scale successful experiences. We handle task sprint allocation, quality assurance routines, and update releases.
+      </p>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-5 pt-4">
+        <a href="#plans" class="w-full sm:w-auto px-9 py-4.5 rounded-full font-semibold text-white bg-gradient-to-r from-brand-blue via-brand-purple to-brand-pink hover:shadow-2xl hover:shadow-brand-purple/35 text-center transition-all duration-300 hover:scale-102">
+          View Plans
+        </a>
+        <a href="#contact" class="w-full sm:w-auto px-9 py-4.5 rounded-full font-semibold text-slate-300 border border-slate-800 bg-slate-950/40 backdrop-blur hover:bg-slate-900/60 hover:text-white text-center transition-all duration-300 hover:scale-102">
+          Contact Us
+        </a>
+      </div>
+
+      <!-- Interactive UI Mockup / Dashboard Preview -->
+      <div class="pt-16 max-w-5xl mx-auto opacity-0 translate-y-12 transition-all duration-1000 ease-out" id="hero-dashboard">
+        <div class="glass-card rounded-2xl p-2.5 relative overflow-hidden shadow-2xl">
+          <div class="bg-slate-950/90 rounded-xl p-5 md:p-7 text-left border border-slate-900/60 flex flex-col md:flex-row gap-8">
+            <!-- Sidebar Demo -->
+            <div class="w-full md:w-1/4 space-y-5 border-r border-slate-900/80 md:pr-6 hidden md:block">
+              <div class="flex items-center space-x-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-brand-purple"></span>
+                <div class="h-4 w-2/3 bg-slate-800 rounded-md"></div>
+              </div>
+              <div class="space-y-2 pt-2">
+                <div class="h-9 bg-brand-purple/10 border-l-2 border-brand-purple rounded-r-lg flex items-center px-3"><div class="h-3 w-1/2 bg-slate-700 rounded"></div></div>
+                <div class="h-9 hover:bg-slate-900/50 rounded-lg flex items-center px-3"><div class="h-3 w-2/3 bg-slate-800 rounded"></div></div>
+                <div class="h-9 hover:bg-slate-900/50 rounded-lg flex items-center px-3"><div class="h-3 w-1/3 bg-slate-800 rounded"></div></div>
+              </div>
+            </div>
+            <!-- Main panel Demo -->
+            <div class="flex-1 space-y-6">
+              <div class="flex items-center justify-between">
+                <div class="space-y-1.5">
+                  <h4 class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">ACTIVE EXPERIENCE PIPELINE</h4>
+                  <h3 class="text-xl font-bold text-white tracking-tight">Non-Currently</h3>
+                </div>
+                <span class="px-3 py-1 text-xs font-semibold rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 shadow-sm">Non-Active</span>
+              </div>
+              
+              <!-- Project Stats -->
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="bg-slate-900/30 p-4 rounded-xl border border-slate-800">
+                  <div class="text-slate-500 text-[9px] font-bold uppercase tracking-wider">Sprint Progress</div>
+                  <div class="text-2xl font-extrabold text-white mt-1">0%</div>
+                </div>
+                <div class="bg-slate-900/30 p-4 rounded-xl border border-slate-800">
+                  <div class="text-slate-500 text-[9px] font-bold uppercase tracking-wider">Active Devs</div>
+                  <div class="text-2xl font-extrabold text-white mt-1">0 Active</div>
+                </div>
+                <div class="bg-slate-900/30 p-4 rounded-xl border border-slate-800">
+                  <div class="text-slate-500 text-[9px] font-bold uppercase tracking-wider">QA Bug Status</div>
+                  <div class="text-2xl font-extrabold text-emerald-400 mt-1">0/0</div>
+                </div>
+                <div class="bg-slate-900/30 p-4 rounded-xl border border-slate-800">
+                  <div class="text-slate-500 text-[9px] font-bold uppercase tracking-wider">Launch Day</div>
+                  <div class="text-2xl font-extrabold text-brand-blue mt-1">0</div>
+                </div>
+              </div>
+
+              <!-- Dev Timeline Graphic -->
+              <div class="space-y-3 pt-2">
+                <div class="flex justify-between text-xs font-semibold text-slate-400">
+                  <span>Development Milestone (Task Sprint Complete)</span>
+                  <span>Target: N/A</span>
+                </div>
+                <div class="w-full bg-slate-900 h-3 rounded-full overflow-hidden border border-slate-800">
+                  <div class="bg-gradient-to-r from-brand-blue via-brand-purple to-brand-pink h-full rounded-full" style="width: 0%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Us Section -->
+  <section id="about" class="py-32 px-4 md:px-8 max-w-7xl mx-auto relative z-10 scroll-mt-24">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+      <!-- Text Area (Left) -->
+      <div class="lg:col-span-7 space-y-7">
+        <div class="inline-flex items-center space-x-2 bg-slate-900/80 border border-slate-800 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide text-brand-cyan uppercase">
+          <span>Who We Are</span>
+        </div>
+        <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight">
+          Bringing professional operations to Roblox development studios
+        </h2>
+        <p class="text-slate-400 leading-relaxed font-light text-md">
+          At ApexOps, we know that building top Roblox experiences is more than just coding and building. As studios grow, coordinating artists, developers, animators, community managers, and QA testers becomes a massive logistics bottleneck.
+        </p>
+        <p class="text-slate-400 leading-relaxed font-light text-md">
+          We act as your studio's chief operations layer. Our mission is to streamline your pipelines, keep teams on schedule, verify bug lists, and manage update rollouts so your creative directors can focus on building games.
+        </p>
+        <div class="border-t border-slate-900 pt-6">
+          <h4 class="font-bold text-white mb-3 text-lg">Why studios work with us:</h4>
+          <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-slate-400 text-sm">
+            <li class="flex items-center space-x-2.5">
+              <span class="p-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex-shrink-0">
+                <i data-lucide="check" class="w-3.5 h-3.5"></i>
+              </span>
+              <span>Structured agile pipelines</span>
+            </li>
+            <li class="flex items-center space-x-2.5">
+              <span class="p-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex-shrink-0">
+                <i data-lucide="check" class="w-3.5 h-3.5"></i>
+              </span>
+              <span>Decades of Roblox experience</span>
+            </li>
+            <li class="flex items-center space-x-2.5">
+              <span class="p-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex-shrink-0">
+                <i data-lucide="check" class="w-3.5 h-3.5"></i>
+              </span>
+              <span>Advanced monetization loops</span>
+            </li>
+            <li class="flex items-center space-x-2.5">
+              <span class="p-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex-shrink-0">
+                <i data-lucide="check" class="w-3.5 h-3.5"></i>
+              </span>
+              <span>Dedicated 24/7 Slack channels</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Statistics Panel (Right) -->
+      <div class="lg:col-span-5 grid grid-cols-2 gap-5">
+        <!-- Stat Card 1 -->
+        <div class="glass-card glow-blue p-7 rounded-2xl flex flex-col justify-between h-48 border-l-2 border-l-brand-blue">
+          <div class="p-3 bg-brand-blue/10 border border-brand-blue/20 rounded-xl w-fit">
+            <i data-lucide="milestone" class="w-6 h-6 text-brand-blue"></i>
+          </div>
+          <div>
+            <div class="text-3xl sm:text-4xl font-extrabold text-white font-display tracking-tight" data-target="0">0</div>
+            <div class="text-xs text-slate-400 font-semibold mt-1.5 uppercase tracking-wider">Projects Managed</div>
+          </div>
+        </div>
+
+        <!-- Stat Card 2 -->
+        <div class="glass-card glow-purple p-7 rounded-2xl flex flex-col justify-between h-48 border-l-2 border-l-brand-purple">
+          <div class="p-3 bg-brand-purple/10 border border-brand-purple/20 rounded-xl w-fit">
+            <i data-lucide="heart-handshake" class="w-6 h-6 text-brand-purple"></i>
+          </div>
+          <div>
+            <div class="text-3xl sm:text-4xl font-extrabold text-white font-display tracking-tight" data-target="N/A">0</div>
+            <div class="text-xs text-slate-400 font-semibold mt-1.5 uppercase tracking-wider">Happy Clients</div>
+          </div>
+        </div>
+
+        <!-- Stat Card 3 -->
+        <div class="glass-card glow-purple p-7 rounded-2xl flex flex-col justify-between h-48 border-l-2 border-l-brand-purple">
+          <div class="p-3 bg-brand-purple/10 border border-brand-purple/20 rounded-xl w-fit">
+            <i data-lucide="sparkles" class="w-6 h-6 text-brand-purple"></i>
+          </div>
+          <div>
+            <div class="text-3xl sm:text-4xl font-extrabold text-white font-display tracking-tight" data-target="2">0</div>
+            <div class="text-xs text-slate-400 font-semibold mt-1.5 uppercase tracking-wider">Years of Operations</div>
+          </div>
+        </div>
+
+        <!-- Stat Card 4 -->
+        <div class="glass-card glow-blue p-7 rounded-2xl flex flex-col justify-between h-48 border-l-2 border-l-brand-blue">
+          <div class="p-3 bg-brand-blue/10 border border-brand-blue/20 rounded-xl w-fit">
+            <i data-lucide="toy-brick" class="w-6 h-6 text-brand-blue"></i>
+          </div>
+          <div>
+            <div class="text-3xl sm:text-4xl font-extrabold text-white font-display tracking-tight" data-target="1">0</div>
+            <div class="text-xs text-slate-400 font-semibold mt-1.5 uppercase tracking-wider">Team Members</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section id="services" class="py-32 px-4 md:px-8 bg-slate-950/30 relative z-10 scroll-mt-24">
+    <div class="max-w-7xl mx-auto space-y-20">
+      <div class="text-center max-w-3xl mx-auto space-y-4">
+        <div class="inline-flex items-center space-x-2 bg-slate-900/80 border border-slate-800 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide text-brand-blue uppercase">
+          <span>Our Solutions</span>
+        </div>
+        <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight font-display">
+          Full-Stack Studio Operations
+        </h2>
+        <p class="text-slate-400 font-light text-md">
+          We handle project structure, community support, testing loops, and rollout logistics.
+        </p>
+      </div>
+
+      <!-- Services Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Service 1 -->
+        <div class="glass-card glow-blue p-8 rounded-2xl space-y-5">
+          <div class="p-3.5 rounded-xl bg-brand-blue/10 border border-brand-blue/20 w-fit">
+            <i data-lucide="git-branch" class="w-6 h-6 text-brand-blue"></i>
+          </div>
+          <h3 class="text-lg font-bold text-white font-display">Project Management</h3>
+          <p class="text-slate-400 text-sm font-light leading-relaxed">
+            Constructing developer roadmaps, milestone timelines, and sprint logs using professional tools (Jira, Trello, Notion) optimized for builders.
+          </p>
+        </div>
+
+        <!-- Service 2 -->
+        <div class="glass-card glow-purple p-8 rounded-2xl space-y-5">
+          <div class="p-3.5 rounded-xl bg-brand-purple/10 border border-brand-purple/20 w-fit">
+            <i data-lucide="messages-square" class="w-6 h-6 text-brand-purple"></i>
+          </div>
+          <h3 class="text-lg font-bold text-white font-display">Community Management</h3>
+          <p class="text-slate-400 text-sm font-light leading-relaxed">
+            Establishing Discord servers, moderating communities, coordinating Roblox group events, and planning update engagement cycles.
+          </p>
+        </div>
+
+        <!-- Service 3 -->
+        <div class="glass-card glow-purple p-8 rounded-2xl space-y-5">
+          <div class="p-3.5 rounded-xl bg-brand-purple/10 border border-brand-purple/20 w-fit">
+            <i data-lucide="code-2" class="w-6 h-6 text-brand-purple"></i>
+          </div>
+          <h3 class="text-lg font-bold text-white font-display">Development Coordination</h3>
+          <p class="text-slate-400 text-sm font-light leading-relaxed">
+            Facilitating clear task assignments between scripters, modelers, animators, and artists. Managing asset delivery pipelines.
+          </p>
+        </div>
+
+        <!-- Service 4 -->
+        <div class="glass-card glow-blue p-8 rounded-2xl space-y-5">
+          <div class="p-3.5 rounded-xl bg-brand-blue/10 border border-brand-blue/20 w-fit">
+            <i data-lucide="sliders" class="w-6 h-6 text-brand-blue"></i>
+          </div>
+          <h3 class="text-lg font-bold text-white font-display">Team Management</h3>
+          <p class="text-slate-400 text-sm font-light leading-relaxed">
+            Vetting, hiring, onboarding new talent. Structuring task compensation plans, mediating internal disputes, and maintaining team morale.
+          </p>
+        </div>
+
+        <!-- Service 5 -->
+        <div class="glass-card glow-blue p-8 rounded-2xl space-y-5">
+          <div class="p-3.5 rounded-xl bg-brand-blue/10 border border-brand-blue/20 w-fit">
+            <i data-lucide="refresh-cw" class="w-6 h-6 text-brand-blue"></i>
+          </div>
+          <h3 class="text-lg font-bold text-white font-display">Update Planning</h3>
+          <p class="text-slate-400 text-sm font-light leading-relaxed">
+            Structuring seasonal, holiday, and weekly game updates. Aligning social campaigns with dev releases to maximize player counts.
+          </p>
+        </div>
+
+        <!-- Service 6 -->
+        <div class="glass-card glow-purple p-8 rounded-2xl space-y-5">
+          <div class="p-3.5 rounded-xl bg-brand-purple/10 border border-brand-purple/20 w-fit">
+            <i data-lucide="shield-check" class="w-6 h-6 text-brand-purple"></i>
+          </div>
+          <h3 class="text-lg font-bold text-white font-display">Quality Assurance</h3>
+          <p class="text-slate-400 text-sm font-light leading-relaxed">
+            Conducting detailed testing sessions. Bug reporting, multi-device performance profiling (Mobile, Console, VR), and security analysis.
+          </p>
+        </div>
+
+        <!-- Service 7 -->
+        <div class="glass-card glow-purple p-8 rounded-2xl space-y-5">
+          <div class="p-3.5 rounded-xl bg-brand-purple/10 border border-brand-purple/20 w-fit">
+            <i data-lucide="send-to-back" class="w-6 h-6 text-brand-purple"></i>
+          </div>
+          <h3 class="text-lg font-bold text-white font-display">Communication Mgmt</h3>
+          <p class="text-slate-400 text-sm font-light leading-relaxed">
+            Setting up seamless channels between studio founders, contractors, and publishers. Ensuring everyone stays aligned on deadlines.
+          </p>
+        </div>
+
+        <!-- Service 8 -->
+        <div class="glass-card glow-blue p-8 rounded-2xl space-y-5">
+          <div class="p-3.5 rounded-xl bg-brand-blue/10 border border-brand-blue/20 w-fit">
+            <i data-lucide="bar-chart-3" class="w-6 h-6 text-brand-blue"></i>
+          </div>
+          <h3 class="text-lg font-bold text-white font-display">Consulting</h3>
+          <p class="text-slate-400 text-sm font-light leading-relaxed">
+            In-depth audits of game loops, UI/UX flows, Roblox monetization strategies, and retention mechanics to elevate performance.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing / Plans Section -->
+  <section id="plans" class="py-32 px-4 md:px-8 max-w-7xl mx-auto relative z-10 scroll-mt-24">
+    <div class="space-y-20">
+      <div class="text-center max-w-3xl mx-auto space-y-4">
+        <div class="inline-flex items-center space-x-2 bg-slate-900/80 border border-slate-800 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide text-brand-purple uppercase">
+          <span>Investment Plans</span>
+        </div>
+        <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight font-display">
+          Transparent Operational Packages
+        </h2>
+        <p class="text-slate-400 font-light text-md">
+          Choose a management tier that matches your studio scale.
+        </p>
+      </div>
+
+      <!-- Pricing Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch max-w-6xl mx-auto">
+        <!-- Starter Plan -->
+        <div class="glass-card p-8 rounded-2xl flex flex-col justify-between relative transition-all duration-300 hover:border-slate-850">
+          <div class="space-y-6">
+            <div>
+              <h3 class="text-xl font-bold text-white font-display">Starter</h3>
+              <p class="text-slate-400 text-xs mt-1">For small projects and initial updates</p>
+            </div>
+            <div class="flex items-baseline space-x-1">
+              <span class="text-4xl font-extrabold text-white font-display">10.000R$</span>
+              <span class="text-slate-400 text-sm">/ month</span>
+            </div>
+            <div class="border-t border-slate-900 pt-6">
+              <ul class="space-y-4">
+                <li class="flex items-center space-x-3 text-slate-300 text-sm">
+                  <i data-lucide="check" class="w-4 h-4 text-brand-blue flex-shrink-0"></i>
+                  <span>Small Roblox project management</span>
+                </li>
+                <li class="flex items-center space-x-3 text-slate-300 text-sm">
+                  <i data-lucide="check" class="w-4 h-4 text-brand-blue flex-shrink-0"></i>
+                  <span>Weekly status & pipeline reports</span>
+                </li>
+                <li class="flex items-center space-x-3 text-slate-300 text-sm">
+                  <i data-lucide="check" class="w-4 h-4 text-brand-blue flex-shrink-0"></i>
+                  <span>Basic Discord integration setup</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="pt-8">
+            <a href="#contact" class="block w-full py-3.5 rounded-full text-center text-xs font-semibold uppercase tracking-wider text-slate-300 border border-slate-800 bg-slate-950/40 hover:bg-slate-900 transition-colors">
+              Choose Starter
+            </a>
+          </div>
+        </div>
+
+        <!-- Professional Plan (Most Popular) -->
+        <div class="glass-card p-8 rounded-2xl flex flex-col justify-between relative transition-all duration-300 transform lg:scale-103 featured-card-active">
+          <!-- Popular Badge -->
+          <div class="absolute -top-3.5 left-1/2 transform -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-brand-blue to-brand-purple text-[10px] font-bold text-white uppercase tracking-wider shadow-md shadow-brand-purple/20">
+            Most Popular
+          </div>
+          <div class="space-y-6">
+            <div>
+              <div class="flex items-center justify-between">
+                <h3 class="text-xl font-bold text-white font-display">Professional</h3>
+                <span class="px-2 py-0.5 rounded text-[9px] font-bold bg-brand-purple/20 text-brand-purple border border-brand-purple/30 uppercase tracking-wide">Growth</span>
+              </div>
+              <p class="text-slate-400 text-xs mt-1">For growing studios and medium-sized games</p>
+            </div>
+            <div class="flex items-baseline space-x-1">
+              <span class="text-4xl font-extrabold text-white font-display">$1,899</span>
+              <span class="text-slate-400 text-sm">/ month</span>
+            </div>
+            <div class="border-t border-slate-900/80 pt-6">
+              <ul class="space-y-4">
+                <li class="flex items-center space-x-3 text-slate-300 text-sm">
+                  <i data-lucide="check" class="w-4 h-4 text-brand-purple flex-shrink-0"></i>
+                  <span>Medium-sized project coordination</span>
+                </li>
+                <li class="flex items-center space-x-3 text-slate-300 text-sm">
+                  <i data-lucide="check" class="w-4 h-4 text-brand-purple flex-shrink-0"></i>
+                  <span>Daily management & scrum coordination</span>
+                </li>
+                <li class="flex items-center space-x-3 text-slate-300 text-sm">
+                  <i data-lucide="check" class="w-4 h-4 text-brand-purple flex-shrink-0"></i>
+                  <span>Full community management & moderation</span>
+                </li>
+                <li class="flex items-center space-x-3 text-slate-300 text-sm">
+                  <i data-lucide="check" class="w-4 h-4 text-brand-purple flex-shrink-0"></i>
+                  <span>Bi-weekly strategy meetings</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="pt-8">
+            <a href="#contact" class="block w-full py-3.5 rounded-full text-center text-xs font-semibold uppercase tracking-wider text-white bg-gradient-to-r from-brand-blue to-brand-purple hover:opacity-90 transition-all shadow-md shadow-brand-purple/20">
+              Get Started with Pro
+            </a>
+          </div>
+        </div>
+
+        <!-- Enterprise Plan -->
+        <div class="glass-card p-8 rounded-2xl flex flex-col justify-between relative transition-all duration-300 hover:border-slate-850">
+          <div class="space-y-6">
+            <div>
+              <h3 class="text-xl font-bold text-white font-display">Enterprise</h3>
+              <p class="text-slate-450 text-xs mt-1">For massive experiences and large groups</p>
+            </div>
+            <div class="flex items-baseline space-x-1">
+              <span class="text-4xl font-extrabold text-white font-display">Custom</span>
+            </div>
+            <div class="border-t border-slate-900 pt-6">
+              <ul class="space-y-4">
+                <li class="flex items-center space-x-3 text-slate-300 text-sm">
+                  <i data-lucide="check" class="w-4 h-4 text-brand-blue flex-shrink-0"></i>
+                  <span>Full studio operational management</span>
+                </li>
+                <li class="flex items-center space-x-3 text-slate-300 text-sm">
+                  <i data-lucide="check" class="w-4 h-4 text-brand-blue flex-shrink-0"></i>
+                  <span>Dedicated Operations Manager</span>
+                </li>
+                <li class="flex items-center space-x-3 text-slate-300 text-sm">
+                  <i data-lucide="check" class="w-4 h-4 text-brand-blue flex-shrink-0"></i>
+                  <span>Priority support & instant slack integration</span>
+                </li>
+                <li class="flex items-center space-x-3 text-slate-300 text-sm">
+                  <i data-lucide="check" class="w-4 h-4 text-brand-blue flex-shrink-0"></i>
+                  <span>Monetization auditing and consulting</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="pt-8">
+            <a href="#contact" class="block w-full py-3.5 rounded-full text-center text-xs font-semibold uppercase tracking-wider text-slate-300 border border-slate-800 bg-slate-950/40 hover:bg-slate-900 transition-colors">
+              Contact Sales
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Past Projects Section -->
+  <section id="projects" class="py-32 px-4 md:px-8 bg-slate-950/20 relative z-10 scroll-mt-24">
+    <div class="max-w-7xl mx-auto space-y-20">
+      <div class="text-center max-w-3xl mx-auto space-y-4">
+        <div class="inline-flex items-center space-x-2 bg-slate-900/80 border border-slate-800 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide text-brand-blue uppercase">
+          <span>Our Portfolio</span>
+        </div>
+        <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight font-display">
+          Track Record of Managed Success
+        </h2>
+        <p class="text-slate-400 font-light text-md">
+          Fictional Roblox experiences that showcase our typical structural, testing, and operations pipelines.
+        </p>
+      </div>
+
+      <!-- Project Cards Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Project 1 -->
+        <div class="glass-card glow-blue overflow-hidden rounded-2xl flex flex-col justify-between">
+          <div>
+            <div class="h-48 relative overflow-hidden bg-slate-950 flex items-center justify-center border-b border-slate-900">
+              <div class="absolute inset-0 bg-gradient-to-tr from-brand-blue/30 via-brand-purple/20 to-transparent opacity-80"></div>
+              <div class="absolute inset-0 animated-grid opacity-20"></div>
+              <i data-lucide="swords" class="w-16 h-16 text-brand-blue relative z-10 animate-float"></i>
+              <div class="absolute bottom-4 left-4 bg-slate-950/90 backdrop-blur-md px-3 py-1 rounded-lg text-[9px] font-bold text-slate-300 border border-slate-850">
+                Simulator
+              </div>
+            </div>
+            
+            <div class="p-7 space-y-3.5">
+              <div class="flex items-center justify-between text-xs text-slate-500">
+                <span class="font-bold uppercase tracking-wider text-brand-blue">Blox Royale</span>
+                <span>Completed: 2025</span>
+              </div>
+              <h3 class="text-xl font-bold text-white font-display">Blox Royale</h3>
+              <p class="text-slate-400 text-sm font-light leading-relaxed">
+                A highly tactical battle simulator with card deck customization. Managed task allocation for 6 developers and verified the entire milestone log.
+              </p>
+            </div>
+          </div>
+          
+          <div class="px-7 pb-7 pt-2">
+            <div class="border-t border-slate-900 pt-4">
+              <div class="text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-2.5">Services provided:</div>
+              <div class="flex flex-wrap gap-1.5">
+                <span class="px-2.5 py-0.5 rounded text-[10px] bg-slate-900 text-slate-300 border border-slate-800">Project Management</span>
+                <span class="px-2.5 py-0.5 rounded text-[10px] bg-slate-900 text-slate-300 border border-slate-800">QA Testing</span>
+                <span class="px-2.5 py-0.5 rounded text-[10px] bg-slate-900 text-slate-300 border border-slate-800">Update Planning</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="glass-card glow-purple overflow-hidden rounded-2xl flex flex-col justify-between">
+          <div>
+            <div class="h-48 relative overflow-hidden bg-slate-950 flex items-center justify-center border-b border-slate-900">
+              <div class="absolute inset-0 bg-gradient-to-tr from-brand-purple/30 via-brand-pink/20 to-transparent opacity-80"></div>
+              <div class="absolute inset-0 animated-grid opacity-20"></div>
+              <i data-lucide="building-2" class="w-16 h-16 text-brand-purple relative z-10 animate-float-reverse"></i>
+              <div class="absolute bottom-4 left-4 bg-slate-950/90 backdrop-blur-md px-3 py-1 rounded-lg text-[9px] font-bold text-slate-300 border border-slate-850">
+                Tycoon
+              </div>
+            </div>
+            
+            <div class="p-7 space-y-3.5">
+              <div class="flex items-center justify-between text-xs text-slate-500">
+                <span class="font-bold uppercase tracking-wider text-brand-purple">Adopt Me Tycoon</span>
+                <span>Completed: 2024</span>
+              </div>
+              <h3 class="text-xl font-bold text-white font-display">Adopt Me Tycoon</h3>
+              <p class="text-slate-400 text-sm font-light leading-relaxed">
+                An empire builder themed around customizable properties and companion pet systems. Optimized developer tasks and monetization parameters.
+              </p>
+            </div>
+          </div>
+          
+          <div class="px-7 pb-7 pt-2">
+            <div class="border-t border-slate-900 pt-4">
+              <div class="text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-2.5">Services provided:</div>
+              <div class="flex flex-wrap gap-1.5">
+                <span class="px-2.5 py-0.5 rounded text-[10px] bg-slate-900 text-slate-300 border border-slate-800">Dev Coordination</span>
+                <span class="px-2.5 py-0.5 rounded text-[10px] bg-slate-900 text-slate-300 border border-slate-800">Consulting</span>
+                <span class="px-2.5 py-0.5 rounded text-[10px] bg-slate-900 text-slate-300 border border-slate-800">QA Testing</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 3 -->
+        <div class="glass-card glow-blue overflow-hidden rounded-2xl flex flex-col justify-between">
+          <div>
+            <div class="h-48 relative overflow-hidden bg-slate-950 flex items-center justify-center border-b border-slate-900">
+              <div class="absolute inset-0 bg-gradient-to-tr from-brand-blue/20 via-brand-cyan/20 to-transparent opacity-80"></div>
+              <div class="absolute inset-0 animated-grid opacity-20"></div>
+              <i data-lucide="orbit" class="w-16 h-16 text-brand-cyan relative z-10 animate-float"></i>
+              <div class="absolute bottom-4 left-4 bg-slate-950/90 backdrop-blur-md px-3 py-1 rounded-lg text-[9px] font-bold text-slate-300 border border-slate-850">
+                Obby
+              </div>
+            </div>
+            
+            <div class="p-7 space-y-3.5">
+              <div class="flex items-center justify-between text-xs text-slate-500">
+                <span class="font-bold uppercase tracking-wider text-brand-cyan">Cyber Run Obby</span>
+                <span>Completed: 2026</span>
+              </div>
+              <h3 class="text-xl font-bold text-white font-display">Cyber Run Obby</h3>
+              <p class="text-slate-400 text-sm font-light leading-relaxed">
+                A fast platformer featuring weekly leaderboards. Coordinated community outreach, moderated Discord growth, and handled weekly performance tests.
+              </p>
+            </div>
+          </div>
+          
+          <div class="px-7 pb-7 pt-2">
+            <div class="border-t border-slate-900 pt-4">
+              <div class="text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-2.5">Services provided:</div>
+              <div class="flex flex-wrap gap-1.5">
+                <span class="px-2.5 py-0.5 rounded text-[10px] bg-slate-900 text-slate-300 border border-slate-800">Community Mgmt</span>
+                <span class="px-2.5 py-0.5 rounded text-[10px] bg-slate-900 text-slate-300 border border-slate-800">Team Management</span>
+                <span class="px-2.5 py-0.5 rounded text-[10px] bg-slate-900 text-slate-300 border border-slate-800">QA Testing</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feedback / Testimonials Section -->
+  <section id="testimonials" class="py-32 px-4 md:px-8 max-w-7xl mx-auto relative z-10 scroll-mt-24">
+    <div class="space-y-20">
+      <div class="text-center max-w-3xl mx-auto space-y-4">
+        <div class="inline-flex items-center space-x-2 bg-slate-900/80 border border-slate-800 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide text-brand-purple uppercase">
+          <span>Reviews</span>
+        </div>
+        <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight font-display">
+          What Studio Leaders Say
+        </h2>
+        <p class="text-slate-400 font-light text-md">
+          Feedback from team directors who delegated operations to us.
+        </p>
+      </div>
+
+      <!-- Testimonials Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Testimonial 1 -->
+        <div class="glass-card p-7 rounded-2xl flex flex-col justify-between space-y-6 relative border-t-2 border-brand-blue">
+          <div class="space-y-4">
+            <!-- Stars -->
+            <div class="flex text-amber-400 space-x-0.5">
+              <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+            </div>
+            <p class="text-slate-300 text-sm font-light leading-relaxed italic">
+              "ApexOps shifted our production layout. Before hiring them, we were stuck sorting out pipeline tasks and managing model contracts. Now, our scripters focus entirely on development, and updates roll out seamlessly."
+            </p>
+          </div>
+          <div class="flex items-center space-x-3.5 border-t border-slate-900 pt-4">
+            <div class="w-10 h-10 rounded-full bg-brand-blue/15 flex items-center justify-center text-brand-blue font-bold font-display text-xs border border-brand-blue/20 shadow-inner">
+              LV
+            </div>
+            <div>
+              <h4 class="text-sm font-bold text-white">Landon Vance</h4>
+              <p class="text-[10px] text-slate-500 uppercase font-semibold tracking-wider">Director, Vance Games</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Testimonial 2 -->
+        <div class="glass-card p-7 rounded-2xl flex flex-col justify-between space-y-6 relative border-t-2 border-brand-purple">
+          <div class="space-y-4">
+            <!-- Stars -->
+            <div class="flex text-amber-400 space-x-0.5">
+              <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+            </div>
+            <p class="text-slate-300 text-sm font-light leading-relaxed italic">
+              "Their QA workflows saved multiple release windows. They detected critical memory leaks on mobile devices that would have crashed our servers upon launch. Essential management for any serious Roblox team."
+            </p>
+          </div>
+          <div class="flex items-center space-x-3.5 border-t border-slate-900 pt-4">
+            <div class="w-10 h-10 rounded-full bg-brand-purple/15 flex items-center justify-center text-brand-purple font-bold font-display text-xs border border-brand-purple/20 shadow-inner">
+              SB
+            </div>
+            <div>
+              <h4 class="text-sm font-bold text-white">Sienna Brooks</h4>
+              <p class="text-[10px] text-slate-500 uppercase font-semibold tracking-wider">Creator, Blox Royale</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Testimonial 3 -->
+        <div class="glass-card p-7 rounded-2xl flex flex-col justify-between space-y-6 relative border-t-2 border-brand-pink">
+          <div class="space-y-4">
+            <!-- Stars -->
+            <div class="flex text-amber-400 space-x-0.5">
+              <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+            </div>
+            <p class="text-slate-300 text-sm font-light leading-relaxed italic">
+              "Our active player counts and Discord metrics skyrocketed once ApexOps took over update planning and event tracking. The community stays highly active between our core content releases."
+            </p>
+          </div>
+          <div class="flex items-center space-x-3.5 border-t border-slate-900 pt-4">
+            <div class="w-10 h-10 rounded-full bg-brand-pink/15 flex items-center justify-center text-brand-pink font-bold font-display text-xs border border-brand-pink/20 shadow-inner">
+              TR
+            </div>
+            <div>
+              <h4 class="text-sm font-bold text-white">Tyler Reynolds</h4>
+              <p class="text-[10px] text-slate-500 uppercase font-semibold tracking-wider">Co-Founder, DreamLoop</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Us Section -->
+  <section id="contact" class="py-32 px-4 md:px-8 max-w-7xl mx-auto relative z-10 scroll-mt-24">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
+      <!-- Contact Info Sidebar (Left) -->
+      <div class="lg:col-span-5 space-y-9">
+        <div class="space-y-4">
+          <div class="inline-flex items-center space-x-2 bg-slate-900/80 border border-slate-800 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide text-brand-cyan uppercase">
+            <span>Contact Us</span>
+          </div>
+          <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight font-display">
+            Start scaling your game
+          </h2>
+          <p class="text-slate-400 font-light text-md leading-relaxed">
+            Ready to streamline your studio operations? Send us a message and we'll coordinate a discovery call.
+          </p>
+        </div>
+
+        <div class="space-y-6 pt-6 border-t border-slate-900">
+          <!-- Item 1 -->
+          <div class="flex items-start space-x-4">
+            <div class="p-3 bg-brand-blue/10 border border-brand-blue/20 rounded-xl text-brand-blue flex-shrink-0">
+              <i data-lucide="message-square" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h4 class="text-sm font-bold text-white">Discord Handle</h4>
+              <p class="text-xs text-slate-400 mt-0.5">Message operations team directly</p>
+              <a href="#" class="text-xs text-brand-blue hover:underline transition-all font-semibold mt-1 inline-block">@ApexOpsOps</a>
+            </div>
+          </div>
+
+          <!-- Item 2 -->
+          <div class="flex items-start space-x-4">
+            <div class="p-3 bg-brand-purple/10 border border-brand-purple/20 rounded-xl text-brand-purple flex-shrink-0">
+              <i data-lucide="mail" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h4 class="text-sm font-bold text-white">Email Contact</h4>
+              <p class="text-xs text-slate-400 mt-0.5">Inquiries & studio proposals</p>
+              <a href="mailto:ops@apexops.net" class="text-xs text-brand-purple hover:underline transition-all font-semibold mt-1 inline-block">ops@apexops.net</a>
+            </div>
+          </div>
+
+          <!-- Item 3 -->
+          <div class="flex items-start space-x-4">
+            <div class="p-3 bg-slate-900 border border-slate-800 rounded-xl text-slate-400 flex-shrink-0">
+              <i data-lucide="clock" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h4 class="text-sm font-bold text-white">Response Expectation</h4>
+              <p class="text-xs text-slate-400 mt-0.5">Under 2 hours during operations hours</p>
+            </div>
+          </div>
+
+          <!-- Item 4 -->
+          <div class="flex items-start space-x-4">
+            <div class="p-3 bg-slate-900 border border-slate-800 rounded-xl text-slate-400 flex-shrink-0">
+              <i data-lucide="calendar" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h4 class="text-sm font-bold text-white">Operations Hours</h4>
+              <p class="text-xs text-slate-400 mt-0.5">Monday - Friday: 9 AM - 6 PM EST</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Form (Right) -->
+      <div class="lg:col-span-7">
+        <div class="glass-card p-8 rounded-2xl relative shadow-2xl">
+          <form id="contact-form" class="space-y-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div class="space-y-2.5">
+                <label for="name" class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Full Name</label>
+                <input type="text" id="name" name="name" required placeholder="Landon Vance" class="w-full bg-slate-950/80 border border-slate-800 focus:border-brand-purple focus:ring-1 focus:ring-brand-purple text-white px-4 py-3.5 rounded-xl outline-none transition-all text-sm">
+              </div>
+              <div class="space-y-2.5">
+                <label for="email" class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Email Address</label>
+                <input type="email" id="email" name="email" required placeholder="landon@vancegames.com" class="w-full bg-slate-950/80 border border-slate-800 focus:border-brand-purple focus:ring-1 focus:ring-brand-purple text-white px-4 py-3.5 rounded-xl outline-none transition-all text-sm">
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div class="space-y-2.5">
+                <label for="studio" class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Company / Studio</label>
+                <input type="text" id="studio" name="studio" required placeholder="Vance Games" class="w-full bg-slate-950/80 border border-slate-800 focus:border-brand-purple focus:ring-1 focus:ring-brand-purple text-white px-4 py-3.5 rounded-xl outline-none transition-all text-sm">
+              </div>
+              <div class="space-y-2.5">
+                <label for="discord" class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Discord Username (Optional)</label>
+                <input type="text" id="discord" name="discord" placeholder="landon_vance" class="w-full bg-slate-950/80 border border-slate-800 focus:border-brand-purple focus:ring-1 focus:ring-brand-purple text-white px-4 py-3.5 rounded-xl outline-none transition-all text-sm">
+              </div>
+            </div>
+
+            <div class="space-y-2.5">
+              <label for="message" class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Message</label>
+              <textarea id="message" name="message" required rows="4" placeholder="Tell us about your game development struggles, team size, and goals..." class="w-full bg-slate-950/80 border border-slate-800 focus:border-brand-purple focus:ring-1 focus:ring-brand-purple text-white px-4 py-4 rounded-xl outline-none transition-all text-sm resize-none"></textarea>
+            </div>
+
+            <!-- Notification Banner -->
+            <div id="form-notification" class="hidden p-4.5 rounded-xl text-sm border font-medium"></div>
+
+            <button type="submit" id="submit-btn" class="w-full py-4 rounded-xl text-center text-xs font-semibold uppercase tracking-wider text-white bg-gradient-to-r from-brand-blue via-brand-purple to-brand-pink hover:opacity-95 transition-all duration-300 shadow-md shadow-brand-purple/20 flex items-center justify-center space-x-2.5">
+              <span>Send Message</span>
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-900 bg-slate-950/90 relative z-10 py-16 px-4 md:px-8">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+      <div class="space-y-5">
+        <!-- Logo -->
+        <a href="#" class="flex items-center space-x-3.5">
+          <img src="/logo.jpg" alt="ApexOps Logo" class="w-9 h-9 rounded-xl border border-slate-900 flex-shrink-0">
+          <span class="text-2xl font-bold tracking-tight text-white font-display">Apex<span class="text-brand-blue">Ops</span></span>
+        </a>
+        <p class="text-slate-500 text-xs leading-relaxed max-w-xs font-light">
+          Apex Studio Operations (ApexOps) is an independent operational management firm for Roblox game development studios. We are not affiliated with Roblox Corporation.
+        </p>
+      </div>
+
+      <div>
+        <h4 class="text-xs font-bold text-white uppercase tracking-widest mb-5 font-display">Navigation</h4>
+        <ul class="space-y-3.5 text-xs text-slate-400">
+          <li><a href="#about" class="hover:text-white transition-colors">About Us</a></li>
+          <li><a href="#services" class="hover:text-white transition-colors">Services</a></li>
+          <li><a href="#projects" class="hover:text-white transition-colors">Past Projects</a></li>
+          <li><a href="#plans" class="hover:text-white transition-colors">Pricing Plans</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="text-xs font-bold text-white uppercase tracking-widest mb-5 font-display">Legal</h4>
+        <ul class="space-y-3.5 text-xs text-slate-400">
+          <li><a href="#" class="hover:text-white transition-colors">Privacy Policy</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Terms of Service</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Cookie Settings</a></li>
+        </ul>
+      </div>
+
+      <div class="space-y-5">
+        <h4 class="text-xs font-bold text-white uppercase tracking-widest mb-3 font-display">Social Channels</h4>
+        <div class="flex space-x-3 text-slate-400">
+          <a href="#" class="p-2.5 bg-slate-900 border border-slate-800 rounded-xl hover:text-white hover:border-slate-700 transition-colors">
+            <i data-lucide="twitter" class="w-4 h-4"></i>
+          </a>
+          <a href="#" class="p-2.5 bg-slate-900 border border-slate-800 rounded-xl hover:text-white hover:border-slate-700 transition-colors">
+            <i data-lucide="chrome" class="w-4 h-4"></i>
+          </a>
+          <a href="#" class="p-2.5 bg-slate-900 border border-slate-800 rounded-xl hover:text-white hover:border-slate-700 transition-colors">
+            <i data-lucide="message-square" class="w-4 h-4"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto pt-8 border-t border-slate-900 text-center md:flex md:justify-between md:items-center text-xs text-slate-500 font-light">
+      <p>&copy; 2026 Apex Studio Operations. All rights reserved.</p>
+      <p class="mt-3 md:mt-0">Designed with passion for Roblox developers.</p>
+    </div>
+  </footer>
+
+  <!-- Lucide Icons Initialization Script -->
+  <script>
+    lucide.createIcons();
+  </script>
+  
+  <!-- Main Frontend Interaction Logic -->
+  <script src="js/app.js"></script>
+</body>
+</html>
